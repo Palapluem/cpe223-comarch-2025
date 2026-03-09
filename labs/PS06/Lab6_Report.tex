@@ -1,0 +1,190 @@
+% !TEX program = xelatex
+\documentclass[12pt]{article}
+% Compile with XeLaTeX to support Thai Unicode text.
+\usepackage{fontspec}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{xcolor}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+% Prefer TH Sarabun New (common Windows Thai font). Scale to match math text.
+\IfFontExistsTF{TH Sarabun New}{\setmainfont[Scale=MatchLowercase]{TH Sarabun New}}{%
+    \IfFontExistsTF{THSarabunNew}{\setmainfont[Scale=MatchLowercase]{THSarabunNew}}{\setmainfont[Scale=MatchLowercase]{Tahoma}}%
+}
+
+% Number only top-level sections (1, 2, 3). No 1.1 for subsections.
+\setcounter{secnumdepth}{1}
+
+% --- Bit-table helpers (lecture-style alignment) ---
+\setlength{\arraycolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\newcommand{\bit}[1]{\mathtt{#1}}
+\newcommand{\rbit}[1]{\textcolor{red}{\mathtt{#1}}}
+\newcommand{\coef}[1]{\mathtt{#1}}
+\newcommand{\cblank}{\phantom{\coef{+1}}}
+\newcommand{\blank}{\phantom{\bit{0}}}
+
+\begin{document}
+
+\title{Lab 6: Multiplication Algorithms Solution}
+\author{CPE223 Computer Architecture}
+\date{\today}
+\maketitle
+
+\section{Booth's Algorithm (Regular)}
+Rules: 
+\begin{itemize}
+    \item 0 0 or 1 1: Shift Right Arithmetic (ASR)
+    \item 0 1: $A = A + M$, then ASR
+    \item 1 0: $A = A - M$, then ASR
+\end{itemize}
+
+\subsection{พิจารณา $-4 \times 5$}
+$M = -4$ (1100), $Q = 5$ (0101)
+
+\[
+\begin{array}{cc@{\qquad\Longrightarrow\qquad}c}
+\begin{array}{c@{\;}cccc@{\;}l}
+\phantom{\times}&\bit{1}&\bit{1}&\bit{0}&\bit{0}&(-4)\\
+\times&\bit{0}&\bit{1}&\bit{0}&\bit{1}&(+5)\\
+\hline
+\end{array}
+& &
+\begin{array}{*{8}{c}l}
+\blank&\blank&\blank&\blank&\bit{1}&\bit{1}&\bit{0}&\bit{0}&\\
+\blank&\blank&\blank&\blank&\coef{+1}&\coef{-1}&\coef{+1}&\coef{-1}&\\
+\hline
+% Shift is shown like the notes: keep the 8-bit row, but leave k trailing blanks for shift k
+% shift 0: (+4) = 0000 0100
+\rbit{0}&\rbit{0}&\rbit{0}&\rbit{0}&\bit{0}&\bit{1}&\bit{0}&\bit{0}&\\
+% shift 1: (-4)<<1 = 1111 1000  (leave 1 blank)
+\rbit{1}&\rbit{1}&\rbit{1}&\bit{1}&\bit{1}&\bit{0}&\bit{0}&\blank&\\
+% shift 2: (+4)<<2 = 0001 0000  (leave 2 blanks)
+\rbit{0}&\rbit{0}&\bit{0}&\bit{1}&\bit{0}&\bit{0}&\blank&\blank&\\
+% shift 3: (-4)<<3 = 1110 0000  (leave 3 blanks)
+\rbit{1}&\bit{1}&\bit{1}&\bit{0}&\bit{0}&\blank&\blank&\blank&\\
+\hline
+\bit{1}&\bit{1}&\bit{1}&\bit{0}&\bit{1}&\bit{1}&\bit{0}&\bit{0}&(-20)
+\end{array}
+\end{array}
+\]
+
+\subsection{พิจารณา $5 \times -4$}
+$M = 5$ (0101), $Q = -4$ (1100)
+
+\[
+\begin{array}{cc@{\qquad\Longrightarrow\qquad}c}
+\begin{array}{c@{\;}cccc@{\;}l}
+\phantom{\times}&\bit{0}&\bit{1}&\bit{0}&\bit{1}&(+5)\\
+\times&\bit{1}&\bit{1}&\bit{0}&\bit{0}&(-4)\\
+\hline
+\end{array}
+& &
+\begin{array}{*{8}{c}l}
+\blank&\blank&\blank&\blank&\bit{0}&\bit{1}&\bit{0}&\bit{1}&\\
+\blank&\blank&\blank&\blank&\coef{0}&\coef{-1}&\coef{0}&\coef{0}&\\
+\hline
+% 4 rows like the notes (including 0-rows); shifting = trailing blanks
+% shift 0: 0000 0000
+\rbit{0}&\rbit{0}&\rbit{0}&\rbit{0}&\bit{0}&\bit{0}&\bit{0}&\bit{0}&\\
+% shift 1: 0000 0000  (leave 1 blank)
+\rbit{0}&\rbit{0}&\rbit{0}&\bit{0}&\bit{0}&\bit{0}&\bit{0}&\blank&\\
+% shift 2: (-5)<<2 = 1110 1100  (leave 2 blanks)
+\rbit{1}&\rbit{1}&\bit{1}&\bit{0}&\bit{1}&\bit{1}&\blank&\blank&\\
+% shift 3: 0000 0000  (leave 3 blanks)
+\rbit{0}&\bit{0}&\bit{0}&\bit{0}&\bit{0}&\blank&\blank&\blank&\\
+\hline
+\bit{1}&\bit{1}&\bit{1}&\bit{0}&\bit{1}&\bit{1}&\bit{0}&\bit{0}&(-20)
+\end{array}
+\end{array}
+\]
+
+\newpage
+\section{Bit-pair Recoding (Modified Booth's Algorithm)}
+
+\subsection{พิจารณา $-4 \times 5$}
+\[
+\begin{array}{cc@{\qquad\Longrightarrow\qquad}c}
+\begin{array}{c@{\;}cccc@{\;}l}
+\phantom{\times}&\bit{1}&\bit{1}&\bit{0}&\bit{0}&(-4)\\
+\times&\bit{0}&\bit{1}&\bit{0}&\bit{1}&(+5)\\
+\hline
+\end{array}
+& &
+\begin{array}{*{8}{c}l}
+\blank&\blank&\blank&\blank&\bit{1}&\bit{1}&\bit{0}&\bit{0}&\\
+% show only the two +1 like the notes (others blank)
+\blank&\blank&\blank&\blank&\cblank&\coef{+1}&\cblank&\coef{+1}&\\
+\hline
+% radix-4 (notes-style): trailing blanks indicate the shift
+% shift 0: (-4) = 1111 1100
+\rbit{1}&\rbit{1}&\rbit{1}&\rbit{1}&\bit{1}&\bit{1}&\bit{0}&\bit{0}&\\
+% shift 2: (-4)<<2 = 1111 0000  (leave 2 blanks)
+\rbit{1}&\rbit{1}&\bit{1}&\bit{1}&\bit{0}&\bit{0}&\blank&\blank&\\
+\hline
+\bit{1}&\bit{1}&\bit{1}&\bit{0}&\bit{1}&\bit{1}&\bit{0}&\bit{0}&(-20)
+\end{array}
+\end{array}
+\]
+
+\subsection{พิจารณา $5 \times -4$}
+\[
+\begin{array}{cc@{\qquad\Longrightarrow\qquad}c}
+\begin{array}{c@{\;}cccc@{\;}l}
+\phantom{\times}&\bit{0}&\bit{1}&\bit{0}&\bit{1}&(+5)\\
+\times&\bit{1}&\bit{1}&\bit{0}&\bit{0}&(-4)\\
+\hline
+\end{array}
+& &
+\begin{array}{*{8}{c}l}
+\blank&\blank&\blank&\blank&\bit{0}&\bit{1}&\bit{0}&\bit{1}&\\
+% show -1 and the trailing 0 like the notes
+\blank&\blank&\blank&\blank&\cblank&\coef{-1}&\cblank&\coef{0}&\\
+\hline
+% shift 0: 0000 0000
+\rbit{0}&\rbit{0}&\rbit{0}&\rbit{0}&\bit{0}&\bit{0}&\bit{0}&\bit{0}&\\
+% shift 2: (-5)<<2 = 1110 1100  (leave 2 blanks)
+\rbit{1}&\rbit{1}&\bit{1}&\bit{0}&\bit{1}&\bit{1}&\blank&\blank&\\
+\hline
+\bit{1}&\bit{1}&\bit{1}&\bit{0}&\bit{1}&\bit{1}&\bit{0}&\bit{0}&(-20)
+\end{array}
+\end{array}
+\]
+
+\section{Discussion}
+\sloppy
+\textbf{1) Booth's Algorithm (Regular)}
+
+ประสิทธิภาพของ Booth ขึ้นอยู่กับรูปแบบบิตของ \textit{ตัวคูณ} $Q$ เพราะอัลกอริทึมดูคู่บิต
+$(Q_i,Q_{i-1})$ แล้วตัดสินใจว่าในคาบนั้นจะ \textit{บวก/ลบ} $M$ หรือ \textit{เลื่อน (ASR)} อย่างเดียว
+ดังนั้นจำนวนครั้งที่ต้องทำ ``บวก/ลบ'' จะขึ้นกับจำนวนครั้งที่บิตของ $Q$ เปลี่ยนสถานะ
+(ขอบเขต 0\,$\leftrightarrow$\,1) ในการไล่บิต
+\begin{itemize}
+    \item กรณี $-4\times 5$ (ตัวคูณ $Q=0101$): บิตสลับ 0/1 ทำให้คู่บิตสลับเป็น
+    01 และ 10 เกือบทุกคาบ จึงเกิดการดำเนินการแบบ $+M$ / $-M$ มากที่สุด
+    (สำหรับ 4 บิตคือ 4 ครั้ง) ถือเป็น \textit{Worst Case} และแทบไม่ต่างจากการคูณแบบปกติ
+    \item กรณี $5\times -4$ (ตัวคูณ $Q=1100$): มีช่วงบิตซ้ำ (11 และ 00)
+    หลายคาบจึงเป็นกรณี 11/00 ที่ทำแค่ ASR โดยไม่ต้องบวก/ลบ
+    ในตัวอย่างนี้จะมีการทำบวก/ลบเพียง 1 ครั้ง (ที่คู่บิต 10)
+    ถือเป็น \textit{Best Case}
+\end{itemize}
+
+\textbf{ข้อจำกัดของ Booth:} หากรูปแบบบิตของตัวคูณเข้าใกล้ Worst Case (เช่น 0101)
+ประโยชน์ด้านความเร็วจะลดลงมาก
+
+\medskip
+\textbf{2) Bit-pair Recoding Multiplication (Radix-4 Modified Booth)}
+
+Bit-pair recoding จะพิจารณา 3 บิต $(Q_{2i+1},Q_{2i},Q_{2i-1})$ แล้วเข้ารหัสเป็นค่าสัมประสิทธิ์ในชุด
+$\{-2,-1,0,+1,+2\}$ ทำให้จำนวน partial products ลดลงจากประมาณ $n$ แถว
+เหลือประมาณครึ่งหนึ่งคือ $\lceil n/2 \rceil$ แถว (สำหรับตัวคูณ $n$ บิต)
+\begin{itemize}
+    \item สำหรับแลปนี้ $n=4$ จึงเหลือ 2 แถวในทั้งสองกรณี ($-4\times 5$ และ $5\times -4$)
+    \item เมื่อจำนวนแถวลดลง จำนวนรอบ/จำนวนการบวกสะสมก็ลดลงด้วย (เช่น 4 รอบเหลือ 2 รอบ)
+    และให้เวลาคำนวณที่สม่ำเสมอกว่า Booth แบบปกติ
+\end{itemize}
+
+\fussy
+
+\end{document}

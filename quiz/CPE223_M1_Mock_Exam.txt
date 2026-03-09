@@ -1,0 +1,546 @@
+\documentclass[a4paper,12pt]{article}
+
+% แพ็กเกจสำหรับภาษาไทยและการจัดการเอกสาร
+\usepackage{fontspec}
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{needspace}
+\usepackage{multicol}
+
+% ตั้งค่าฟอนต์ภาษาไทย (ต้องมี TH Sarabun New)
+\setmainfont{TH Sarabun New} 
+\setmonofont{Courier New}
+
+% ปรับแต่งค่าความห่างบรรทัด
+\linespread{1.15}
+
+% ตั้งค่าสีสำหรับ Code
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4,
+    frame=single
+}
+\lstset{style=mystyle}
+
+\begin{document}
+
+% --- Cover Page / Header ---
+\thispagestyle{empty}
+\begin{center}
+    \textbf{\Large [CPE223] COMPUTER ARCHITECTURES}\\
+    \vspace{0.2cm}
+    \textbf{\large M1 Exam (ข้อสอบภาษาอังกฤษล้วน)}\\
+    \vspace{0.2cm}
+    Time: 3 Hours | Language: English\\
+    (Thai translation provided only in Answer Key)\\
+    \vspace{0.5cm}
+\end{center}
+\hrule
+\vspace{0.5cm}
+
+% --- Part 1 ---
+\section*{Part 1: Multiple Choice Questions (20 Points)}
+\textbf{Instructions:} Select the correct answer.
+
+% Intro (Lecture 1)
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \needspace{4\baselineskip}
+    \item Which statement is TRUE?
+    \begin{enumerate}[label=\alph*)]
+        \item The motherboard contains the circuitry that connects the processor to the other hardware.
+        \item The term "bit" refers to the amount of memory required to store one letter.
+        \item If a computer has a 64-bit data bus, it can transfer 4 bytes of data at a time.
+        \item ALU stands for Array Logic Unit.
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item Which memory type has the fastest access speed?
+    \begin{enumerate}[label=\alph*)]
+        \item Main Memory (RAM)
+        \item L1 Cache
+        \item Register
+        \item Hard Disk
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item What process is used to put transistors on a silicon wafer?
+    \begin{enumerate}[label=\alph*)]
+        \item Etching
+        \item Crafting
+        \item Baking
+        \item Doping
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item Which register holds the address of the next instruction?
+    \begin{enumerate}[label=\alph*)]
+        \item IR
+        \item PC
+        \item MAR
+        \item MDR
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item Where is the instruction currently being executed stored?
+    \begin{enumerate}[label=\alph*)]
+        \item PC
+        \item IR
+        \item MAR
+        \item ALU
+    \end{enumerate}
+    
+    \needspace{4\baselineskip}
+    \item Writing data to a Special Purpose Register incorrectly may cause:
+    \begin{enumerate}[label=\alph*)]
+        \item Explosion.
+        \item Unexpected instruction execution or branching error.
+        \item Hard disk format.
+        \item Automatic shutdown.
+    \end{enumerate}
+
+% Instruction Sequencing / Data (Lecture 2)
+    \needspace{4\baselineskip}
+    \item Little-endian stores 0x12345678 at address 1000. What is at 1000?
+    \begin{enumerate}[label=\alph*)]
+        \item 12
+        \item 34
+        \item 56
+        \item 78
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item What is the 2's complement representation of -5 (8-bit)?
+    \begin{enumerate}[label=\alph*)]
+        \item 00000101
+        \item 11111011
+        \item 11111010
+        \item 10000101
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item Which addition causes an overflow (5-bit signed)?
+    \begin{enumerate}[label=\alph*)]
+        \item 00101 + 00010
+        \item 11101 + 11110
+        \item 01100 (+12) + 01000 (+8)
+        \item 11001 + 00101
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item Which character is NOT a Condition Code (Flag)?
+    \begin{enumerate}[label=\alph*)]
+        \item N (Negative)
+        \item Z (Zero)
+        \item V (Overflow)
+        \item E (Equal)
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item Which addressing mode does not access the main memory to get the operand?
+    \begin{enumerate}[label=\alph*)]
+        \item Direct
+        \item Register
+        \item Indirect
+        \item Relative
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item In instruction \texttt{Load R1, 16(R2)}, if R2 = 1000, what is the Effective Address?
+    \begin{enumerate}[label=\alph*)]
+        \item 1000
+        \item 1016
+        \item 16
+        \item 2000
+    \end{enumerate}
+
+% Assembly (Lecture 3)
+    \needspace{4\baselineskip}
+    \item What does the Assembler do?
+    \begin{enumerate}[label=\alph*)]
+        \item Executes the program.
+        \item Translates assembly code into machine code.
+        \item Manages memory.
+        \item Loads the OS.
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item What happens with \texttt{ORIGIN 2000}?
+    \begin{enumerate}[label=\alph*)]
+        \item Program starts at line 2000.
+        \item Next code/data is placed at memory address 2000.
+        \item Variable named ORIGIN has value 2000.
+        \item Reserve 2000 bytes.
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item What is the function of the Link Register?
+    \begin{enumerate}[label=\alph*)]
+        \item To store the stack pointer.
+        \item To store the return address of a subroutine call.
+        \item To link two programs together.
+        \item To store the status flags.
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item In Polling I/O, what does the CPU check repeatedly?
+    \begin{enumerate}[label=\alph*)]
+        \item Data bus
+        \item Status Flag (e.g., SIN/SOUT)
+        \item Interrupt line
+        \item Stack Pointer
+    \end{enumerate}
+
+% Verilog (Lecture 4)
+    \needspace{4\baselineskip}
+    \item Which symbol represents a Non-blocking assignment in Verilog?
+    \begin{enumerate}[label=\alph*)]
+        \item =
+        \item <=
+        \item ==
+        \item :=
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item What is the meaning of \texttt{always @(posedge clk)}?
+    \begin{enumerate}[label=\alph*)]
+        \item Execute continuously when clock is 1.
+        \item Execute once when clock changes from 0 to 1.
+        \item Execute whenever clock changes.
+        \item Execute when clock is 0.
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item \texttt{reg} data type in Verilog is used for:
+    \begin{enumerate}[label=\alph*)]
+        \item Connecting components (wires).
+        \item Storing values in procedural blocks (always/initial).
+        \item Declaring input ports.
+        \item None of the above.
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item A circuit whose output depends only on current inputs is called:
+    \begin{enumerate}[label=\alph*)]
+        \item Sequential Circuit
+        \item Combinational Circuit
+        \item Asynchronous Circuit
+        \item FSM
+    \end{enumerate}
+\end{enumerate}
+
+\newpage
+
+% --- Part 2 ---
+\section*{Part 2: Short-answer questions (20 Points)}
+\textbf{Instructions:} Briefly answer or explain the following concepts. (Lecture 1-3 only, No Verilog)
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \needspace{3\baselineskip}
+    \item What does ALU stand for?
+    \vspace{0.8cm}
+    
+    \needspace{3\baselineskip}
+    \item What does IC stand for?
+    \vspace{0.8cm}
+    
+    \needspace{3\baselineskip}
+    \item Briefly explain the function of the \textbf{Program Counter (PC)}.
+    \vspace{0.8cm}
+
+    \needspace{3\baselineskip}
+    \item Briefly explain the function of the \textbf{Instruction Register (IR)}.
+    \vspace{0.8cm}
+    
+    \needspace{3\baselineskip}
+    \item What is the \textbf{Stack Pointer (SP)} used for?
+    \vspace{0.8cm}
+    
+    \needspace{3\baselineskip}
+    \item What does RISC stand for?
+    \vspace{0.8cm}
+
+    \needspace{3\baselineskip}
+    \item Explain the concept of \textbf{Direct Addressing Mode}.
+    \vspace{0.8cm}
+
+    \needspace{3\baselineskip}
+    \item Explain the operation of the instruction: \texttt{LOAD R2, 4(R1)}
+    \vspace{0.8cm}
+
+    \needspace{3\baselineskip}
+    \item Provide one advantage of \textbf{Interrupt-driven I/O} over Polling.
+    \vspace{0.8cm}
+
+    \needspace{3\baselineskip}
+    \item Explain the operation of the following loop code:
+    \begin{verbatim}
+LOOP SUB R1, #1
+     CMP R1, #0
+     BGE LOOP
+    \end{verbatim}
+    Answer: \underline{\hspace{12cm}}
+    \vspace{0.6cm}
+\end{enumerate}
+
+\newpage
+
+% --- Part 3 ---
+\section*{Part 3: Problem Solving (20 Points)}
+
+\textbf{1. (10 Points) The table below shows the current content of the memory and the stack. Write the NEW content in both memory and stack after execution.}
+
+\begin{center}
+    \begin{minipage}[t]{0.45\textwidth}
+        \centering
+        \underline{The content of the memory} \\ \vspace{0.2cm}
+        \begin{tabular}{r|w{c}{1.2cm}|}
+            \multicolumn{2}{c}{} \\ \cline{2-2}
+            1000 & 1002 \\ \cline{2-2}
+            1002 & 1004 \\ \cline{2-2}
+            1004 & 1006 \\ \cline{2-2}
+            1006 & 1008 \\ \cline{2-2}
+            1008 & 1010 \\ \cline{2-2}
+            1010 & 1012 \\ \cline{2-2}
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.45\textwidth}
+        \centering
+        \underline{The content of the stack} \\ \vspace{0.2cm}
+        \begin{tabular}{r|w{c}{1.2cm}|}
+            \multicolumn{2}{c}{} \\ \cline{2-2}
+             & \\ \cline{2-2}
+             & \\ \cline{2-2}
+             & \\ \cline{2-2}
+            SP & 1000 \\ \cline{2-2}
+             & 1002 \\ \cline{2-2}
+             & 1008 \\ \cline{2-2}
+        \end{tabular}
+    \end{minipage}
+\end{center}
+
+\vspace{0.5cm}
+After the execution of the assembly program below, write the \textbf{new content} in both memory and stack.
+
+\vspace{0.5cm}
+\begin{minipage}{0.8\textwidth}
+\begin{tabular}{ll}
+Load & R0, \#1004 \\
+Load & R1, \#1006 \\
+Load & R2, (SP) \\
+Add & SP, \#1 \\
+Load & R3, (SP) \\
+Add & SP, \#1 \\
+Subtract & SP, \#1 \\
+Store & (SP), (R0)+2 \\
+Add & R2, ((R1)) \\
+Add & R2, (R3)+4 \\
+Store & R1, R2 \\
+\end{tabular}
+\end{minipage}
+
+\vspace{0.5cm}
+Note: DO NOT just give the answer. Please explain how you compute the answer so that partial points can be awarded even if the final answer is wrong.
+
+\vspace{5cm} % Space for answer
+
+\newpage
+
+\textbf{2. (10 Points) Translate the following C program into Assembly Language.}
+
+\begin{center}
+\fbox{\begin{minipage}{0.9\textwidth}
+int N = 9, SUM = 0; \\
+int num[10] = \{4, 9, 12, 15, 20, 25, 28, 33, 36, 41\}; \\
+\\
+while (N $>=$ 0) \{ \\
+\hspace*{0.5cm} if ((num[N] \% 4) == 0) \{ \\
+\hspace*{1cm} SUM += num[N]; \\
+\hspace*{0.5cm} \} \\
+\hspace*{0.5cm} N--; \\
+\}
+\end{minipage}}
+\end{center}
+
+\vspace{0.5cm}
+\textbf{Answer Space:}
+\vspace{8cm}
+
+\newpage
+
+% --- Answer Key (Has Thai) ---
+\section*{Answer Key (เฉลยละเอียด)}
+
+\subsection*{Part 1: Multiple Choice Answers}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{center}
+\begin{tabular}{|c|c|l|}
+\hline
+\rowcolor[gray]{0.8} \textbf{ข้อที่} & \textbf{เฉลย} & \textbf{คำอธิบาย (ภาษาไทย)} \\ \hline
+1 & \textbf{A} & Motherboard ทำหน้าที่เชื่อมต่อ Hardware ส่วนต่าง ๆ เข้าด้วยกัน \\ \hline
+2 & \textbf{C} & Register อยู่ใน CPU เร็วที่สุด (รองลงมาคือ Cache, RAM, HDD) \\ \hline
+3 & \textbf{A} & Etching (การกัดกรด) เป็นขั้นตอนการผลิตลายวงจรบนแผ่นเวเฟอร์ \\ \hline
+4 & \textbf{B} & PC (Program Counter) เก็บ Address ของคำสั่งถัดไป \\ \hline
+5 & \textbf{B} & IR (Instruction Register) เก็บคำสั่งที่กำลังถูก execute ปัจจุบัน \\ \hline
+6 & \textbf{B} & การเขียนทับ Special Register (เช่น PC, SP) อาจทำให้โปรแกรมรวนหรือ crash \\ \hline
+7 & \textbf{D} & Little-endian: Byte นัยสำคัญต่ำสุด (78) อยู่ที่ Address ต่ำสุด (1000) \\ \hline
+8 & \textbf{B} & -5 ใน 8-bit Two's complement คือ 11111011 \\ \hline
+9 & \textbf{C} & Overflow เกิดเมื่อบวกเลขเครื่องหมายเดียวกันแล้วได้ผลลัพธ์เครื่องหมายต่าง \\ \hline
+10 & \textbf{D} & Flag หลักคือ N, Z, V, C ส่วน E (Equal) มักเป็นเงื่อนไขที่เกิดจาก Z=1 \\ \hline
+11 & \textbf{B} & Register Mode ใช้ค่าจาก Register โดยตรง ไม่ต้องอ่าน RAM \\ \hline
+12 & \textbf{B} & 16(R2) คือ 16+1000 = 1016 (Base-Displacement) \\ \hline
+13 & \textbf{B} & Assembler แปลง Assembly code เป็น Machine code \\ \hline
+14 & \textbf{B} & ORIGIN บอกตำแหน่งเริ่มต้นในหน่วยความจำของโค้ดชุดถัดไป \\ \hline
+15 & \textbf{B} & LR (Link Register) เก็บ Return Address เมื่อเรียก Subroutine \\ \hline
+16 & \textbf{B} & Polling คือการที่ CPU วนรอบอ่าน Status Register (Flag) ซ้ำ ๆ \\ \hline
+17 & \textbf{B} & <= คือ Non-blocking assignment (ทำพร้อมกันเมื่อจบ block) \\ \hline
+18 & \textbf{B} & posedge clk คือทำงานเมื่อสัญญาณนาฬิกาเปลี่ยนจาก 0 เป็น 1 (ขอบขาขึ้น) \\ \hline
+19 & \textbf{B} & data type 'reg' ใช้เก็บค่าใน procedural block (เช่น always) \\ \hline
+20 & \textbf{B} & Combinational Circuit ผลลัพธ์ขึ้นอยู่กับ input ปัจจุบันเท่านั้น (ไม่มี memory) \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection*{Part 2: Short Answer Solutions}
+\begin{enumerate}
+    \item \textbf{ALU}: หน่วยคำนวณทางคณิตศาสตร์และตรรกะ (Arithmetic and Logic Unit)
+    \item \textbf{IC}: วงจรรวม (Integrated Circuit) ชิปที่รวมวงจรอิเล็กทรอนิกส์ไว้ในสารกึ่งตัวนำ
+    \item \textbf{PC}: เก็บ Address ของคำสั่งถัดไปที่จะถูก Fetch มาทำงาน
+    \item \textbf{IR}: เก็บ Instruction ปัจจุบันที่กำลังถูก Decode/Execute อยู่
+    \item \textbf{SP}: ชี้ตำแหน่งบนสุดของ Stack (Top of Stack) ใช้เก็บข้อมูลชั่วคราวหรือ Return Address
+    \item \textbf{RISC}: สถาปัตยกรรมคอมพิวเตอร์ที่เน้นชุดคำสั่งขนาดเล็กและเรียบง่าย (Reduced Instruction Set Computer)
+    \item \textbf{Direct Addressing}: การระบุ Memory Address ลงไปตรง ๆ ในตัวคำสั่งเลย (เช่น LOAD R1, 1000)
+    \item \textbf{LOAD R2, 4(R1)}: เอาค่าใน R1 บวกกับ 4 ได้ Address ปลายทาง แล้วไป Load ข่าจาก Address นั้นมาใส่ R2 (Indexed/Displacement Mode)
+    \item \textbf{Advantage of Interrupt}: CPU ไม่ต้องเสียเวลาวนลูปตรวจสอบสถานะ (Polling) สามารถทำงานอื่นไปได้เรื่อย ๆ จนกว่าอุปกรณ์จะแจ้งเตือน
+    \item \textbf{Code Explanation}: ลูปนี้จะลดค่า R1 ทีละ 1 และวนซ้ำตราบเท่าที่ R1 $\ge$ 0 (วนลูปตามจำนวนรอบที่กำหนดใน R1 หรือจนกว่า R1 จะติดลบ)
+\end{enumerate}
+
+\subsection*{Part 3: Problem Solving Solutions}
+
+\textbf{1. Memory \& Stack Content Step-by-Step Trace}
+\\ \textit{สมมติฐาน: การบวก/ลบ SP ด้วย \#1 หมายถึงการเลื่อนไป Address ถัดไปตามขนาด Word (2 bytes) ในระบบจำลองนี้}
+
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Initial State}: SP = 1000, Mem[1000]=1002, Mem[1002]=1004, ...
+    \item \texttt{Load R0, \#1004}: R0 = 1004
+    \item \texttt{Load R1, \#1006}: R1 = 1006
+    \item \texttt{Load R2, (SP)}: อ่าน Mem[1000] $\to$ R2 = 1002
+    \item \texttt{Add SP, \#1}: SP เลื่อนลง $\to$ SP = 1002 (Address ถัดไป)
+    \item \texttt{Load R3, (SP)}: อ่าน Mem[1002] $\to$ R3 = 1004
+    \item \texttt{Add SP, \#1}: SP เลื่อนลง $\to$ SP = 1004
+    \item \texttt{Subtract SP, \#1}: SP ย้อนกลับ $\to$ SP = 1002
+    \item \texttt{Store (SP), (R0)+2}: 
+    \\ - ปลายทาง: (SP) คือ Mem[1002]
+    \\ - ต้นทาง: ใช้ R0 (1004) เป็น Address $\to$ อ่าน Mem[1004] ได้ค่า \textbf{1006}
+    \\ - หลังอ่าน R0 บวอกเพิ่ม 2 $\to$ R0 = 1006 (Post-increment)
+    \\ - \textbf{ผลลัพธ์}: เขียนค่า 1006 ทับลงใน Mem[1002] (ค่าเดิมคือ 1004 หายไป)
+    \item \texttt{Add R2, ((R1))}:
+    \\ - R1 = 1006
+    \\ - Value = Mem[Mem[1006]] = Mem[1008] = 1010
+    \\ - R2 = R2 + 1010 = 1002 + 1010 = \textbf{2012}
+    \item \texttt{Add R2, (R3)+4}:
+    \\ - R3 ปัจจุบันคือ 1004 (โหลดไว้ตั้งแต่ข้อ 6 ก่อน Mem[1002] จะเปลี่ยน และ R3 ไม่ได้ถูกแก้)
+    \\ - อ่าน Mem[R3] = Mem[1004] = 1006
+    \\ - R2 = R2 + 1006 = 2012 + 1006 = \textbf{3018}
+    \\ - R3 บวกเพิ่ม 4 $\to$ R3 = 1008
+    \item \texttt{Store R1, R2}:
+    \\ - เขียนค่า R2 (3018) ลงใน Address ที่ R1 ชี้ (1006)
+    \\ - \textbf{ผลลัพธ์}: Mem[1006] เปลี่ยนเป็น 3018
+\end{enumerate}
+
+\textbf{Final Answers:}
+\begin{center}
+    \begin{minipage}[t]{0.3\textwidth}
+        \centering
+        \underline{Memory} \\
+        \begin{tabular}{|c|c|}
+            \hline
+            1000 & 1002 \\ \hline
+            1002 & \textbf{1006} \\ \hline
+            1004 & 1006 \\ \hline
+            1006 & \textbf{3018} \\ \hline
+            1008 & 1010 \\ \hline
+            1010 & 1012 \\ \hline
+        \end{tabular}
+    \end{minipage}
+    \hspace{1cm}
+    \begin{minipage}[t]{0.3\textwidth}
+        \centering
+        \underline{Stack} \\
+        (SP อยู่ที่ 1002) \\
+        \begin{tabular}{|c|}
+            \hline
+             \\ \hline
+             \\ \hline
+            1000 \\ \hline
+            \textbf{1002} \\ \hline
+            1008 \\ \hline
+        \end{tabular}
+    \end{minipage}
+\end{center}
+
+\vspace{0.5cm}
+\textbf{2. C to Assembly Translation}
+\\ \textbf{Logic Idea}: ใช้ R0 แทน N (Index), R1 แทน SUM, R2 เก็บ Base Address ของ Array
+
+\begin{minipage}{0.9\textwidth}
+\begin{verbatim}
+       ; Initialization
+       LOAD  R0, #9           ; N = 9
+       LOAD  R1, #0           ; SUM = 0
+       LOAD  R2, #NUM_BASE    ; R2 points to start of num[] array
+       
+LOOP:  
+       ; Check Loop Condition (N >= 0)
+       CMP   R0, #0
+       BLT   END_LOOP         ; If N < 0, Exit Loop
+       
+       ; Load num[N]
+       ; Assuming integer is 1 word (offset N)
+       ; Calculate address = R2 + R0
+       ADD   R3, R2, R0       ; R3 = Address of num[N] (Simplified)
+       LOAD  R4, (R3)         ; R4 = num[N]
+       
+       ; Check if (num[N] % 4) == 0
+       ; Modulo 4 is equivalent to checking last 2 bits (AND 3)
+       AND   R5, R4, #3       ; R5 = num[N] & 3
+       CMP   R5, #0
+       BNE   SKIP_SUM         ; If not 0, it's not divisible by 4
+       
+       ; SUM += num[N]
+       ADD   R1, R1, R4       ; SUM = SUM + num[N]
+       
+SKIP_SUM:
+       ; N--
+       SUB   R0, #1           ; Decrement N
+       BRA   LOOP             ; Jump back to start
+       
+END_LOOP:
+       ; Finished
+\end{verbatim}
+\end{minipage}
+\end{document}
