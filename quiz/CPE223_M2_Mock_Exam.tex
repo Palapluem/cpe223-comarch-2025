@@ -1,0 +1,490 @@
+\documentclass[12pt]{article}
+\usepackage{fontspec} % Required for custom fonts
+
+% แพ็กเกจสำหรับภาษาไทยและการจัดการเอกสาร
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{needspace}
+\usepackage{multicol}
+
+% ตั้งค่าฟอนต์ภาษาไทย (ต้องมี TH Sarabun New ในเครื่อง)
+\setmainfont{TH Sarabun New}
+\setmonofont{Courier New}
+
+% ปรับแต่งค่าความห่างบรรทัด
+\linespread{1.15}
+
+% ตั้งค่าสีสำหรับ Code
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+\title{\textbf{[CPE223] COMPUTER ARCHITECTURES \\ M2 Mock Exam (ARM Ultimate Edition)}}
+\author{Time: 3 Hours | Full Score: 60 Points}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Part 1: Multiple Choice Questions (20 Points)}
+\textit{Instructions: Select the correct answer. (1 point each)}
+
+\textbf{1. Interrupt Nesting can be handled using which of the following scheme?}
+\begin{enumerate}[label=\Alph*.]
+    \item Vectored Interrupt
+    \item Daisy Chain
+    \item Priority
+    \item All of the above
+    \item None of the above
+\end{enumerate}
+
+\textbf{2. Which statement is not true about expansion bus?}
+\begin{enumerate}[label=\Alph*.]
+    \item SCSI allows overlapping of data transfer request.
+    \item USB Hubs are an intermediate control point between a host and I/O devices.
+    \item In PCI device, there is a small configuration RAM that stores information about the device.
+    \item All are true.
+    \item All are false.
+\end{enumerate}
+
+\textbf{3. Which is not a function of an I/O interface circuit?}
+\begin{enumerate}[label=\Alph*.]
+    \item Provides a storage buffer for at least one word of data.
+    \item Performs any format conversion that may be necessary to transfer data between the bus and the I/O device.
+    \item Provides an address-decoding circuit to determine when being addressed by the processor.
+    \item Contains status flags that can be accessed by the processor.
+    \item Generates a clock signal to synchronize the I/O device and the processor.
+\end{enumerate}
+
+\textbf{4. What is not correct for I/O operation?}
+\begin{enumerate}[label=\Alph*.]
+    \item The processor checks the status flag repeatedly in polling.
+    \item After reading data, the SIN flag is set to 1 to indicate it's ready for new data.
+    \item An Interrupt Service Routine (ISR) is called when an interrupt occurs.
+    \item The processor responds to an interrupt with the INTA signal.
+    \item Keyboard and Display usually have separate status registers.
+\end{enumerate}
+
+\textbf{5. Which signal is NOT important in a polling I/O operation?}
+\begin{enumerate}[label=\Alph*.]
+    \item SIN
+    \item SOUT
+    \item DATAIN
+    \item DIRQ (Device Interrupt Request)
+    \item STATUS
+\end{enumerate}
+
+\textbf{6. In a Carry Look-Ahead Adder (CLA), which statement perfectly describes its practical implementation?}
+\begin{enumerate}[label=\Alph*.]
+    \item CLA is completely independent of the number of bits, so a 64-bit CLA has the same gate delay as a 4-bit CLA.
+    \item CLA calculates all carry signals simultaneously by completely eliminating the $G_i$ and $P_i$ dependencies.
+    \item A purely flat CLA for 32-bit operands is highly impractical due to fan-in limitations of logic gates, requiring a cascaded approach.
+    \item CLA is widely used in multiplication but cannot be used for subtraction.
+    \item CLA uses fewer logic gates and is vastly cheaper than Carry Ripple Adder (CRA).
+\end{enumerate}
+
+\textbf{7. When executing the Booth Algorithm, which multiplier bit-pattern below will cause the algorithm to perform WORSE than the standard shift-and-add algorithm?}
+\begin{enumerate}[label=\Alph*.]
+    \item 00001111
+    \item 11110000
+    \item 11111111
+    \item 01010101
+    \item 10000001
+\end{enumerate}
+
+\textbf{8. Consider the Non-Restoring Division algorithm. If the current remainder in the accumulator (A) is NEGATIVE after a subtraction, what is the exact sequence of actions for the NEXT cycle?}
+\begin{enumerate}[label=\Alph*.]
+    \item Shift left, then Subtract divisor, then set $q_0 = 0$.
+    \item Shift left, then Add divisor, then set $q_0$ based on the new sign of A.
+    \item Restore A by adding divisor, Shift left, then Subtract divisor.
+    \item Set $q_0 = 0$, Shift left, then Add divisor.
+    \item Shift right, then Add divisor, then set $q_0 = 1$.
+\end{enumerate}
+
+\textbf{9. How many gate delays are required to compute the final summation bit ($s_{31}$) of a 32-bit CLA adder built from cascaded 4-bit CLA adder blocks?}
+\begin{enumerate}[label=\Alph*.]
+    \item 10 gate delays
+    \item 14 gate delays
+    \item 17 gate delays
+    \item 18 gate delays
+    \item 32 gate delays
+\end{enumerate}
+
+\textbf{10. To increase the efficiency of the Booth algorithm, Bit-pair recoding is used. The recoded pair \texttt{(+1, -1)} is mathematically equivalent to which single operation?}
+\begin{enumerate}[label=\Alph*.]
+    \item (0, -1)
+    \item (0, +1)
+    \item (+1, 0)
+    \item (-1, 0)
+    \item (0, +2)
+\end{enumerate}
+
+\textbf{11. Which design decision makes the ARM ISA appropriate for pipelining implementation?}
+\begin{enumerate}[label=\Alph*.]
+    \item ARM instructions have highly variable lengths to save memory space.
+    \item ARM ISA contains a large number of complex memory-to-memory operations.
+    \item ARM instructions are uniformly 32-bit (in standard mode), facilitating a streamlined fetch and decode stage.
+    \item ARM relies heavily on direct hardware interrupt manipulation.
+    \item ARM processors do not use a Program Counter (PC).
+\end{enumerate}
+
+\textbf{12. Which of the following statements is TRUE according to the ARM (RISC) architecture?}
+\begin{enumerate}[label=\Alph*.]
+    \item Arithmetic operations can be performed directly on variables stored in main memory.
+    \item Load and Store instructions (LDR/STR) must be used to move data between memory and registers before performing arithmetic operations.
+    \item The processor has only one general-purpose register.
+    \item The PC register holds the operand currently being executed.
+    \item The IR register holds the memory address to be accessed.
+\end{enumerate}
+
+\textbf{13. According to the Single Bus CPU Architecture, what is the sequence of control signals for the FIRST step of any Instruction Fetch?}
+\begin{enumerate}[label=\Alph*.]
+    \item $Z_{out}, PC_{in}, WMFC$
+    \item $MDR_{out}, IR_{in}$
+    \item $PC_{out}, Y_{in}, WMFC$
+    \item $PC_{out}, MAR_{in}, Read, Select4, Add, Z_{in}$
+    \item $R1_{out}, MAR_{in}, Read$
+\end{enumerate}
+
+\textbf{14. In a Single-Bus CPU architecture, why is the \texttt{Y} register necessary during an ALU operation (e.g., \texttt{ADD R1, R2, R3})?}
+\begin{enumerate}[label=\Alph*.]
+    \item To store the final result of the ALU before transferring to Z.
+    \item To hold the instruction opcode for the Control Unit.
+    \item To temporarily hold one of the operands for the ALU, since the internal bus can only carry one word at a time.
+    \item To interface directly with the data lines of the memory bus.
+    \item To store the effective address of the operand.
+\end{enumerate}
+
+\textbf{15. What does the control signal \texttt{WMFC} stand for?}
+\begin{enumerate}[label=\Alph*.]
+    \item Write Memory Function Complete
+    \item Wait for Memory Function Complete
+    \item Word Memory Fetch Cycle
+    \item Write Memory Fast Cycle
+    \item Window Management For CPU
+\end{enumerate}
+
+\textbf{16. Which technique can be used to reduce the effect of Control Hazard?}
+\begin{enumerate}[label=\Alph*.]
+    \item Operand Forwarding
+    \item Data Bypassing
+    \item Branch Prediction
+    \item Increasing memory size
+    \item Loop Unrolling
+\end{enumerate}
+
+\textbf{17. A situation where an instruction cannot proceed because it needs the result of a previous instruction that has not yet finished is called:}
+\begin{enumerate}[label=\Alph*.]
+    \item Structural Hazard
+    \item Control Hazard
+    \item Data Hazard
+    \item Cache Miss
+    \item Pipeline Stall
+\end{enumerate}
+
+\textbf{18. A Structural Hazard occurs in a pipeline when:}
+\begin{enumerate}[label=\Alph*.]
+    \item An instruction depends on a previous data calculation.
+    \item A branch instruction changes the PC dynamically.
+    \item Two instructions request to use the same hardware resource (e.g., Memory or Register File) at the same clock cycle.
+    \item The memory is too slow to respond to the processor.
+    \item An interrupt occurs during the execution stage.
+\end{enumerate}
+
+\textbf{19. In a 4-State Branch Prediction algorithm, if the current state is \texttt{LT} (Likely Taken) and the actual branch outcome is \texttt{Branch Not Taken} (BNT), what will be the next state?}
+\begin{enumerate}[label=\Alph*.]
+    \item ST (Strongly Taken)
+    \item LNT (Likely Not Taken)
+    \item SNT (Strongly Not Taken)
+    \item LT (Likely Taken)
+    \item Back to initial state
+\end{enumerate}
+
+\textbf{20. What is the primary purpose of a "Branch Delay Slot"?}
+\begin{enumerate}[label=\Alph*.]
+    \item To stall the pipeline completely to ensure accuracy.
+    \item To place an instruction that must be executed anyway immediately after a branch, thus preventing a wasted clock cycle (flush).
+    \item To flush the wrong instructions from the pipeline automatically.
+    \item To delay the memory write-back.
+    \item To resolve data dependencies using software.
+\end{enumerate}
+
+\newpage
+\section*{Part 2: Short Answer (10 Points)}
+\textit{Instructions: Briefly answer the following questions based on Lectures 5-8.}
+
+\textbf{1.} What is "Interrupt Latency"? \\
+\rule{\textwidth}{0.4pt} \\
+
+\textbf{2.} What is the main disadvantage of Program-controlled I/O (Polling) regarding processor time? \\
+\rule{\textwidth}{0.4pt} \\
+
+\textbf{3.} What is the main difference between a Synchronous Bus and an Asynchronous Bus? \\
+\rule{\textwidth}{0.4pt} \\
+
+\textbf{4.} What does "ISR" stand for? \\
+\rule{\textwidth}{0.4pt} \\
+
+\textbf{5.} What is "Daisy Chain" used for in an interrupt system? \\
+\rule{\textwidth}{0.4pt} \\
+
+\textbf{6.} Why is Carry Look-Ahead Adder (CLA) faster than Carry Ripple Adder (CRA)? \\
+\rule{\textwidth}{0.4pt} \\
+
+\textbf{7.} What causes a "Data Hazard" in pipelining? \\
+\rule{\textwidth}{0.4pt} \\
+
+\textbf{8.} Explain the concept of "Operand Forwarding" (Data Bypassing). \\
+\rule{\textwidth}{0.4pt} \\
+
+\textbf{9.} What causes a "Control Hazard"? \\
+\rule{\textwidth}{0.4pt} \\
+
+\textbf{10.} What is a "Superscalar" processor? \\
+\rule{\textwidth}{0.4pt} \\
+
+\newpage
+\section*{Part 3: Problem Solving (30 Points)}
+\textit{Instructions: Show your work in detail.}
+
+\textbf{Question 1: I/O Organization - Asynchronous Bus (7.5 Points)} \\
+From the timing diagram of an asynchronous bus protocol for an input transfer (Master reading from Slave) shown in class, answer the following:
+
+\textbf{1.1 (2.5 points)} Why do we need the delay time between $t_0$ to $t_1$? \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+
+\textbf{1.2 (2.5 points)} What is the meaning of the action at $t_4$ (when Slave-ready drops from 1 to 0)? \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+
+\textbf{1.3 (2.5 points)} What happen, if we don't have the delay time between $t_3$ to $t_4$? \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+
+\vspace{1cm}
+
+\textbf{Question 2: Computer Arithmetic - Restoring Division (7.5 Points)} \\
+From the restoring-division circuit: \textbf{divide 13 by 7} using the circuit and show the content of register A and Q in each cycle. \\
+\textit{(Note: Dividend Q = 13 (1101), Divisor M = 7 (00111), $-M$ in 2's complement = 11001)} \\
+
+\vspace{0.5cm}
+\begin{center}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{A (5-bit)} & \textbf{Q (4-bit)} & \textbf{End of} \\
+\hline
+\texttt{00000} & \texttt{1101} & Initial Values \\
+\hline
+\texttt{00001} & \texttt{1010} & First cycle \textit{(Shift $\to$ Sub $\to$ Neg $\to$ q0=0 $\to$ Restore)} \\
+\hline
+\texttt{00011} & \texttt{0100} & Second cycle \textit{(Shift $\to$ Sub $\to$ Neg $\to$ q0=0 $\to$ Restore)} \\
+\hline
+\texttt{00110} & \texttt{1000} & Third cycle \textit{(Shift $\to$ Sub $\to$ Neg $\to$ q0=0 $\to$ Restore)} \\
+\hline
+\texttt{00101} & \texttt{0001} & Fourth cycle \textit{(Shift $\to$ Sub $\to$ Pos $\to$ q0=1 $\to$ No Restore)} \\
+\hline
+\end{tabular}
+\end{center}
+\textit{Result: Remainder = 00101 (5), Quotient = 0001 (1)}
+
+\textbf{Question 3: Processing Unit - Datapath (ARM Edition) (7.5 Points)} \\
+According to the single bus CPU architecture, please show your understanding of the stages and data paths as the steps and actions for the following \textbf{ARM assembly instructions} (destination operand on the left-hand side). \\
+\textit{Note: Assume the hardware has a constant 4 connected to the MUX.}
+
+\textbf{\texttt{LDR R1, [R2, \#4]}} \textit{(Load into R1 the value from memory address calculated by R2 + 4)} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+
+\vspace{1cm}
+\textbf{\texttt{ADD R1, R2, [R3]}} \textit{(Add the value in R2 with the value in memory at address R3, then store in R1)} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+
+\newpage
+\textbf{Question 4: Pipelining - Diagram \& Delay Slot (7.5 Points)} \\
+Consider the following code:
+\begin{lstlisting}[language={[x86masm]Assembler}]
+I1: Load #0, C       
+I2: Compare A, B     
+I3: Branch>0 Action1 
+I4: DEC C            
+I5: Branch NEXT
+Action1: 
+I6: INC C   
+NEXT: 
+I7: Load #0, D
+\end{lstlisting}
+
+\textbf{a) Assume that a branch-not-taken is predicted}, and that the branch target is known after the execution (E) stage, draw a 4-stage pipeline (F-D-E-W) diagram when \textbf{A = 2 and B = 1}. \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+
+\vspace{1cm}
+\textbf{b) Does delay slot exist? If so, show how to eliminate it.} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+
+
+\newpage
+\section*{Answer Key \& Detailed Explanation}
+
+\subsection*{Part 1: Multiple Choice}
+\begin{enumerate}
+    \item \textbf{D)} การทำ Interrupt ซ้อนกันต้องอาศัยการจัด Priority ซึ่งทำได้ผ่านฮาร์ดแวร์แบบ Daisy Chain และใช้ Vectored ชี้ตำแหน่งเพื่อความรวดเร็ว
+    \item \textbf{C)} ผิด เพราะข้อมูล Configuration ของอุปกรณ์ PCI ถูกเก็บใน ROM ไม่ใช่ RAM
+    \item \textbf{E)} I/O Interface ไม่ได้มีหน้าที่สร้างสัญญาณ Clock ให้ Processor
+    \item \textbf{B)} ผิด หลังจากอ่านข้อมูลเสร็จ สเตตัส SIN ต้องถูกรีเซ็ตเป็น 0 เพื่อรอรับข้อมูลใหม่
+    \item \textbf{D)} DIRQ ใช้สำหรับการแจ้งเตือนแบบ Interrupt ไม่ได้ใช้ในระบบ Polling
+    \item \textbf{C)} การสร้าง CLA แบบรวดเดียว 32-bit เป็นไปไม่ได้ในทางปฏิบัติเพราะติดข้อจำกัด Fan-in ของ Logic gate จึงต้องต่อแบบ Cascade ย่อยๆ
+    \item \textbf{D)} รูปแบบบิต 010101... สลับกันไปมาจะทำให้ต้องคำนวณบวก/ลบในทุกๆ รอบ ซึ่งเป็น Worst-case ของ Booth
+    \item \textbf{B)} กฎของ Non-restoring คือถ้ารอบที่แล้ว A ติดลบ รอบถัดไปให้ Shift left แล้วสลับไป "บวก (Add)" ตัวหารแทน
+    \item \textbf{D)} ใช้สูตร $3 + 2(n-1)$ หา Carry out บล็อกสุดท้าย $3+2(7) = 17$ delays และบวกอีก 1 delay สำหรับหา Sum จะได้ 18 gate delays
+    \item \textbf{B)} อิงจากตารางความสัมพันธ์ Bit-pair recoding
+    \item \textbf{C)} รูปแบบคำสั่งที่ขนาดคงที่ 32-bit ทำให้ง่ายต่อการนำไปทำ Pipelining
+    \item \textbf{B)} สถาปัตยกรรมแบบ Load/Store ของ ARM ต้องโหลดค่าเข้า Register ก่อนจึงจะคำนวณผ่าน ALU ได้
+    \item \textbf{D)} ลำดับสัญญาณที่ถูกต้องในการ Fetch คำสั่ง
+    \item \textbf{C)} Bus มีเส้นเดียว ส่งข้อมูลได้ทีละตัว จึงต้องเอาตัวแปรแรกไปพักไว้ที่ Y ก่อน แล้วให้ Bus ส่งตัวแปรที่สองเข้า ALU
+    \item \textbf{B)} Wait for Memory Function Complete
+    \item \textbf{C)} Branch Prediction ใช้คาดเดาและแก้ Control Hazard ส่วน Forwarding ใช้แก้ Data Hazard
+    \item \textbf{C)} Data Dependency ทำให้เกิด Data Hazard
+    \item \textbf{C)} Structural Hazard คือการแย่งใช้ทรัพยากร (Resource) ตัวเดียวกันในเวลาเดียวกัน
+    \item \textbf{B)} เมื่อเดาว่า Taken แต่ผลออกมาคือ Not Taken สถานะจะถูกลงโทษลดระดับ 1 ขั้นไปเป็น LNT ทันที
+    \item \textbf{B)} เอาคำสั่งที่ยังไงก็ต้องทำงาน (ไม่ว่าเงื่อนไขจะเป็นจริงหรือไม่) มาใส่หลัง Branch เพื่อไม่ให้เสีย Clock Cycle ไปเปล่าๆ
+\end{enumerate}
+
+\subsection*{Part 2: Short Answer}
+\begin{enumerate}
+    \item \textbf{Interrupt Latency:} The time between when an interrupt request is received and when the Interrupt Service Routine (ISR) starts execution. (ระยะเวลาตั้งแต่ระบบได้รับคำขอ Interrupt จนถึงตอนที่เริ่มรันโค้ด ISR)
+    \item \textbf{Disadvantage of Polling:} The processor spends a lot of time in wait loops checking the status flag, causing it to idle instead of performing useful computation. (CPU เสียเวลาไปกับการวนลูปเช็คสถานะเปล่าๆ)
+    \item \textbf{Synchronous vs Asynchronous Bus:} A Synchronous Bus uses a common clock signal for timing, while an Asynchronous Bus uses a handshake protocol (Master-ready, Slave-ready) to control data transfers.
+    \item \textbf{ISR:} Interrupt Service Routine
+    \item \textbf{Daisy Chain:} ใช้จัดลำดับความสำคัญ (Priority) ของอุปกรณ์ I/O ที่ขอ Interrupt มาพร้อมกัน อุปกรณ์ที่ต่อสาย INTA ใกล้ Processor ที่สุดจะได้รับสิทธิ์ก่อน
+    \item \textbf{CLA vs CRA:} CLA มีวงจรคำนวณค่า Carry Out ของแต่ละบิตล่วงหน้าแบบขนาน (Parallel) ทำให้ไม่ต้องเสียเวลารอ Carry ส่งต่อ (Ripple) จากบิตก่อนหน้าแบบ CRA
+    \item \textbf{Data Hazard:} เกิดจากการที่คำสั่งปัจจุบัน ต้องรอใช้ผลลัพธ์จากคำสั่งก่อนหน้าที่ยังประมวลผลหรือเขียนลง Register ไม่เสร็จ (Data Dependency)
+    \item \textbf{Operand Forwarding:} การดึงผลลัพธ์จากปลายทางของ ALU ส่งย้อนกลับไปเป็น Input ให้กับ ALU สำหรับคำสั่งถัดไปทันที โดยไม่ต้องรอให้ถึงขั้นตอน Write-back เพื่อช่วยแก้ปัญหา Data Hazard
+    \item \textbf{Control Hazard:} เกิดจากคำสั่งประเภท Branch/Jump ที่ทำให้ CPU ต้องเปลี่ยนเส้นทางการทำงาน ทำให้คำสั่งที่ถูกดึง (Fetch) มาแล้วใน Pipeline กลายเป็นคำสั่งที่ผิดและต้องถูก Flush ทิ้ง
+    \item \textbf{Superscalar:} โปรเซสเซอร์ที่มีหน่วยประมวลผลย่อย (Processing Units) หลายตัวทำงานขนานกัน ทำให้สามารถ Execute คำสั่งที่ต่างกันได้มากกว่า 1 คำสั่งใน Clock Cycle เดียวกัน
+\end{enumerate}
+
+\subsection*{Part 3: Problem Solving}
+
+\textbf{Question 1: I/O Organization - Asynchronous Bus}
+\begin{itemize}
+    \item \textbf{1.1 ($t_0$ to $t_1$ delay):} To allow time for the address and command signals to travel on the bus, stabilize, and give the device interface circuitry time to decode the address to know it is being accessed before the Master asserts the Master-ready signal.
+    \item \textbf{1.2 (Action at $t_4$):} At $t_4$, the Slave detects that the Master-ready signal has dropped to 0 (meaning the Master has successfully received the data). The Slave responds by dropping Slave-ready to 0 and removing its data from the bus, signaling the completion of its part in the transfer.
+    \item \textbf{1.3 (If no delay between $t_3$ to $t_4$):} If a new address and command are placed on the bus immediately before the old Master-ready signal properly decays to 0, devices might misinterpret the leftover signal as a new valid request, causing a data collision or reading error on the bus.
+\end{itemize}
+
+\textbf{Question 2: Restoring Division}
+\begin{center}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{A (5-bit)} & \textbf{Q (4-bit)} & \textbf{End of} \\
+\hline
+\texttt{00000} & \texttt{1101} & Initial Values \\
+\hline
+\texttt{00001} & \texttt{1010} & First cycle \textit{(Shift $\to$ Sub $\to$ Neg $\to$ q0=0 $\to$ Restore)} \\
+\hline
+\texttt{00011} & \texttt{0100} & Second cycle \textit{(Shift $\to$ Sub $\to$ Neg $\to$ q0=0 $\to$ Restore)} \\
+\hline
+\texttt{00110} & \texttt{1000} & Third cycle \textit{(Shift $\to$ Sub $\to$ Neg $\to$ q0=0 $\to$ Restore)} \\
+\hline
+\texttt{00101} & \texttt{0001} & Fourth cycle \textit{(Shift $\to$ Sub $\to$ Pos $\to$ q0=1 $\to$ No Restore)} \\
+\hline
+\end{tabular}
+\end{center}
+\textit{Result: Remainder = 00101 (5), Quotient = 0001 (1)}
+
+\textbf{Question 3: Processing Unit - Datapath}
+\begin{itemize}
+    \item \textbf{\texttt{LDR R1, [R2, \#4]}}
+    \begin{enumerate}
+        \item $PC_{out}, MAR_{in}, Read, Select4, Add, Z_{in}$
+        \item $Z_{out}, PC_{in}, WMFC$
+        \item $MDR_{out}, IR_{in}$
+        \item $R2_{out}, Select4, Add, Z_{in}$ \textit{(Calculate Effective Address: R2 + 4)}
+        \item $Z_{out}, MAR_{in}, Read$ \textit{(Send the calculated address to MAR and Read)}
+        \item $WMFC$ \textit{(Wait for data from memory)}
+        \item $MDR_{out}, R1_{in}, End$ \textit{(Store the fetched data into R1)}
+    \end{enumerate}
+
+    \item \textbf{\texttt{ADD R1, R2, [R3]}}
+    \begin{enumerate}
+        \item $PC_{out}, MAR_{in}, Read, Select4, Add, Z_{in}$
+        \item $Z_{out}, PC_{in}, WMFC$
+        \item $MDR_{out}, IR_{in}$
+        \item $R3_{out}, MAR_{in}, Read$ \textit{(Send address R3 to memory)}
+        \item $WMFC$
+        \item $MDR_{out}, Y_{in}$ \textit{(Hold the value from memory in register Y)}
+        \item $R2_{out}, SelectY, Add, Z_{in}$ \textit{(Add R2 to the value in Y)}
+        \item $Z_{out}, R1_{in}, End$ \textit{(Store the final result in R1)}
+    \end{enumerate}
+\end{itemize}
+
+\textbf{Question 4: Pipelining - Diagram \& Delay Slot} \\
+\textbf{a) Pipeline Diagram (A=2, B=1 $\to$ Branch Taken, but predicted Not Taken):}
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Instruction} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} & \textbf{6} & \textbf{7} & \textbf{8} \\
+\hline
+\textbf{I1} & F & D & E & W & & & & \\
+\textbf{I2} & & F & D & E & W & & & \\
+\textbf{I3} & & & F & D & E & W & & \\
+\textbf{I4} & & & & F & D & X & & \textit{(Flush)} \\
+\textbf{I6} & & & & & F & D & E & W \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{b) Delay slot existence \& Elimination:} \\
+\textbf{Yes}, a delay slot exists (the wasted cycle in clock 4 when flushing the incorrectly fetched I4). \\
+\textbf{How to eliminate:} เราสามารถกำจัด Delay slot ได้โดยใช้เทคนิค \textbf{Instruction Reordering} (การสลับคำสั่ง) โดยย้ายคำสั่ง \texttt{I1: Load \#0, C} ลงมาวางต่อท้าย \texttt{I3: Branch>0 Action1} (ให้เข้ามาอยู่ในพื้นที่ Delay Slot พอดี) 
+เนื่องจากคำสั่ง \texttt{I1} ต้องถูก Execute เสมอไม่ว่าจะเข้าเงื่อนไข Branch หรือไม่ และไม่มีผลต่อตัวแปร A และ B ที่ใช้เปรียบเทียบใน I2 และ I3 การสลับนำ \texttt{I1} มาวางในจังหวะนี้จึงช่วยอุดรอยรั่วของ Clock Cycle ได้โดยไม่ทำให้โปรแกรมทำงานผิดพลาด
+
+\end{document}
