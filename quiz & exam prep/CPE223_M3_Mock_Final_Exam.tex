@@ -1,0 +1,601 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{fontspec}
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{needspace}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\setmainfont{TH Sarabun New}
+\setmonofont{Courier New}
+
+\linespread{1.15}
+\renewcommand{\arraystretch}{1.2}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=single
+}
+\lstset{style=mystyle}
+
+\begin{document}
+
+% --- Cover Page / Header ---
+\thispagestyle{empty}
+\begin{center}
+    \textbf{\Large [CPE223] COMPUTER ARCHITECTURES}\\
+    \vspace{0.2cm}
+    \textbf{\large M3 Mock Final Exam}\\
+    \vspace{0.2cm}
+    Topic: Memory System, Cache Memory, Virtual Memory and Disk \\
+    Time: 2 Hours | Full Score: 50 Points \\
+    \vspace{0.5cm}
+\end{center}
+\hrule
+\vspace{0.5cm}
+
+% --- Part 1 ---
+\section*{Part 1: Multiple Choice Questions (20 Points)}
+\textbf{Instructions:} Select the correct answer. (1 point each)
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \needspace{4\baselineskip}
+    \item In the memory hierarchy, what generally happens when moving from CPU registers/cache toward disk storage?
+    \begin{enumerate}[label=\alph*)]
+        \item Speed increases, size decreases, and cost per bit increases.
+        \item Speed decreases, size increases, and cost per bit decreases.
+        \item Speed, size, and cost per bit all increase.
+        \item Access time is the same for all memory levels.
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item Which statement best describes \textbf{temporal locality}?
+    \begin{enumerate}[label=\alph*)]
+        \item Recently accessed data or instructions are likely to be accessed again soon.
+        \item Addresses close to a recently accessed address are likely to be accessed soon.
+        \item A page table entry must always be stored in the TLB.
+        \item The disk head always moves to the closest track first.
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item Which statement best describes \textbf{spatial locality}?
+    \begin{enumerate}[label=\alph*)]
+        \item Recently executed instructions are never executed again.
+        \item Addresses close to a recently accessed address are likely to be accessed soon.
+        \item The least recently used cache block should never be replaced.
+        \item Cache miss penalty is always zero for sequential programs.
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item A direct-mapped cache has a 32-bit byte address, total cache size 16 KB, and block size 32 bytes. What are the tag, index, and block-offset sizes?
+    \begin{enumerate}[label=\alph*)]
+        \item Tag = 16 bits, Index = 11 bits, Offset = 5 bits
+        \item Tag = 17 bits, Index = 10 bits, Offset = 5 bits
+        \item Tag = 18 bits, Index = 9 bits, Offset = 5 bits
+        \item Tag = 19 bits, Index = 8 bits, Offset = 5 bits
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item A 64 KB cache is 4-way set associative with 64-byte blocks and a 32-bit byte address. How many set-index bits are required?
+    \begin{enumerate}[label=\alph*)]
+        \item 6 bits
+        \item 7 bits
+        \item 8 bits
+        \item 9 bits
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item Using $t_{ave}=h t_C + (1-h)t_M$, a cache has hit rate $h=0.95$, cache access time $t_C=1$ cycle, and miss time $t_M=21$ cycles. What is the average access time?
+    \begin{enumerate}[label=\alph*)]
+        \item 1.05 cycles
+        \item 1.50 cycles
+        \item 2.00 cycles
+        \item 2.95 cycles
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item Which statement correctly describes a \textbf{write-back} cache protocol?
+    \begin{enumerate}[label=\alph*)]
+        \item Cache and main memory are updated simultaneously on every write.
+        \item The processor bypasses cache and writes only to disk.
+        \item The cache block is updated and marked dirty; main memory is updated later when the block is replaced.
+        \item The TLB is flushed every time the cache writes data.
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item In the LRU replacement algorithm, which cache block is selected for replacement?
+    \begin{enumerate}[label=\alph*)]
+        \item The block with the smallest tag value.
+        \item The block most recently referenced.
+        \item The block that has gone the longest time without being referenced.
+        \item A random block from main memory.
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item What usually happens on a \textbf{read miss} in a cache?
+    \begin{enumerate}[label=\alph*)]
+        \item The missing block is loaded from lower-level memory into cache, then the requested word is supplied to the CPU.
+        \item The CPU writes the requested word to disk immediately.
+        \item The cache ignores the miss and returns zero.
+        \item The page table is deleted to reduce memory usage.
+    \end{enumerate}
+
+    \needspace{4\baselineskip}
+    \item What is the primary purpose of a Translation Lookaside Buffer (TLB)?
+    \begin{enumerate}[label=\alph*)]
+        \item To cache recently used virtual-to-physical address translations.
+        \item To store all program data permanently after power off.
+        \item To replace the cache data array in a write-through cache.
+        \item To compute disk rotational latency.
+    \end{enumerate}
+
+    \needspace{16\baselineskip}
+    \item \textbf{Use this same system for Questions 11--20.} A byte-addressable machine uses 32-bit virtual addresses, 28-bit physical addresses, and 4 KB pages. A 1024$\times$1024 array \texttt{A} of 32-bit integers starts at virtual address \texttt{0x00000000} and is stored in \textbf{column-major order}.
+
+    \[
+        \text{VA}(A[i][j]) = (j \times 1024 + i) \times 4
+    \]
+
+    The MMU/TLB state is:
+
+    \begin{center}
+    \scriptsize
+    \begin{tabular}{|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{TLB}} \\ \hline
+    \textbf{VPN} & \textbf{PPN} \\ \hline
+    \texttt{0x00003} & \texttt{0x0006} \\ \hline
+    \texttt{0x00007} & \texttt{0x0012} \\ \hline
+    \end{tabular}
+    \hspace{0.5cm}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \multicolumn{3}{|c|}{\textbf{Page Table}} \\ \hline
+    \textbf{VPN} & \textbf{Location} & \textbf{Valid} \\ \hline
+    \texttt{0x00001} & PPN \texttt{0x003A} & 1 \\ \hline
+    \texttt{0x00002} & Disk D5 & 0 \\ \hline
+    \texttt{0x00003} & PPN \texttt{0x0006} & 1 \\ \hline
+    \texttt{0x00004} & PPN \texttt{0x00B0} & 1 \\ \hline
+    \end{tabular}
+    \hspace{0.5cm}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \multicolumn{3}{|c|}{\textbf{Disk Info}} \\ \hline
+    \textbf{Disk page} & \textbf{Start block} & \textbf{Block size} \\ \hline
+    D5 & \texttt{0x2400} & 512 bytes \\ \hline
+    \end{tabular}
+    \end{center}
+
+    How many bytes are used by the whole array?
+    \begin{enumerate}[label=\alph*)]
+        \item 1 MB
+        \item 2 MB
+        \item 4 MB
+        \item 8 MB
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item What is the virtual address of \texttt{A[0][1]}?
+    \begin{enumerate}[label=\alph*)]
+        \item \texttt{0x00000004}
+        \item \texttt{0x00000400}
+        \item \texttt{0x00001000}
+        \item \texttt{0x00002000}
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item How many virtual pages are occupied by the whole array?
+    \begin{enumerate}[label=\alph*)]
+        \item 256 pages
+        \item 512 pages
+        \item 1024 pages
+        \item 4096 pages
+    \end{enumerate}
+
+    \needspace{7\baselineskip}
+    \item For virtual address \texttt{0x00002C10}, what are the virtual page number (VPN) and page offset?
+    \begin{enumerate}[label=\alph*)]
+        \item VPN = \texttt{0x00001}, Offset = \texttt{0xC10}
+        \item VPN = \texttt{0x00002}, Offset = \texttt{0xC10}
+        \item VPN = \texttt{0x00002}, Offset = \texttt{0x2C1}
+        \item VPN = \texttt{0x0002C}, Offset = \texttt{0x010}
+    \end{enumerate}
+
+    \needspace{7\baselineskip}
+    \item According to the TLB and page table, what happens when the CPU references virtual address \texttt{0x00002C10}?
+    \begin{enumerate}[label=\alph*)]
+        \item TLB hit and the physical address is \texttt{0x00002C10}.
+        \item TLB miss, page table valid, no page fault.
+        \item TLB miss followed by page fault.
+        \item The cache line is marked dirty immediately.
+    \end{enumerate}
+
+    \needspace{7\baselineskip}
+    \item Which disk block contains byte offset \texttt{0xC10} within disk page D5?
+    \begin{enumerate}[label=\alph*)]
+        \item \texttt{0x2404}
+        \item \texttt{0x2405}
+        \item \texttt{0x2406}
+        \item \texttt{0x2408}
+    \end{enumerate}
+
+    \needspace{7\baselineskip}
+    \item How many disk blocks must be read to load the whole 4 KB page?
+    \begin{enumerate}[label=\alph*)]
+        \item 4 blocks
+        \item 8 blocks
+        \item 12 blocks
+        \item 16 blocks
+    \end{enumerate}
+
+    \needspace{7\baselineskip}
+    \item After the missing page is loaded into physical frame PPN \texttt{0x0020}, what is the physical address for virtual address \texttt{0x00002C10}?
+    \begin{enumerate}[label=\alph*)]
+        \item \texttt{0x00002C10}
+        \item \texttt{0x00020C10}
+        \item \texttt{0x00200C10}
+        \item \texttt{0x00202C10}
+    \end{enumerate}
+
+    \needspace{7\baselineskip}
+    \item For virtual address \texttt{0x00003204}, what is the TLB result and physical address?
+    \begin{enumerate}[label=\alph*)]
+        \item TLB miss; \texttt{0x00003204}
+        \item TLB hit; \texttt{0x00006204}
+        \item TLB hit; \texttt{0x00006C10}
+        \item Page fault; no physical address yet
+    \end{enumerate}
+
+    \needspace{7\baselineskip}
+    \item In the normalization code from the written practice, each column is one 4 KB page and loading one page costs 40 ms. If the array is stored in column order, what is the estimated total page-fault time?
+    \begin{enumerate}[label=\alph*)]
+        \item 10.24 s
+        \item 20.48 s
+        \item 40.96 s
+        \item 81.92 s
+    \end{enumerate}
+\end{enumerate}
+
+\newpage
+
+% --- Part 2 ---
+\section*{Part 2: Short-answer questions (10 Points)}
+\textbf{Instructions:} Briefly answer or explain the following concepts. (1 point each)
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \needspace{3\baselineskip}
+    \item What is the \textbf{benefit of cache memory}?
+    \vspace{0.8cm}
+
+    \needspace{3\baselineskip}
+    \item Is it possible for a program to have a \textbf{100\% cache miss rate}? Briefly explain.
+    \vspace{1.0cm}
+
+    \needspace{3\baselineskip}
+    \item What is the purpose of a \textbf{tag store} in cache memory?
+    \vspace{0.8cm}
+
+    \needspace{3\baselineskip}
+    \item Briefly distinguish \textbf{temporal locality} and \textbf{spatial locality}.
+    \vspace{1.0cm}
+
+    \needspace{3\baselineskip}
+    \item In cache addressing, what are \textbf{tag}, \textbf{index/set}, and \textbf{offset} used for?
+    \vspace{1.0cm}
+
+    \needspace{3\baselineskip}
+    \item Write the full names of these abbreviations: \textbf{TLB}, \textbf{LRU}, and \textbf{AMAT}.
+    \vspace{0.8cm}
+
+    \needspace{3\baselineskip}
+    \item State one key difference between \textbf{write-through} and \textbf{write-back} cache protocols.
+    \vspace{1.0cm}
+
+    \needspace{3\baselineskip}
+    \item What is \textbf{demand paging}, and when does a page fault occur?
+    \vspace{1.0cm}
+
+    \needspace{3\baselineskip}
+    \item What is the difference between a \textbf{virtual address} and a \textbf{physical address}?
+    \vspace{1.0cm}
+
+    \needspace{3\baselineskip}
+    \item What are the main components of \textbf{disk access latency}?
+    \vspace{0.8cm}
+\end{enumerate}
+
+\newpage
+
+% --- Part 3 ---
+\section*{Part 3: Problem Solving (20 Points)}
+\textbf{Instructions:} Show your work in detail.
+
+\textbf{1. (10 Points) Array Normalization, Direct-Mapped Cache, and Page Faults}
+
+A 1024$\times$1024 array of 32-bit numbers is stored in the main memory starting at address 0. The array is to be normalized as follows. For each column, the largest value is found and all elements of the column are divided by this maximum value. Assume that each page in the direct-mapped cache consists of 4 KB, and the cache size is 1 MB.
+
+\begin{enumerate}[label=\textbf{1.\arabic*}]
+    \item (2 points) How many bytes are used by the whole array?
+    \vspace{1.0cm}
+
+    \item (2 points) How many array elements fit in one 4 KB page?
+    \vspace{1.0cm}
+
+    \item (2 points) How many 4 KB pages can fit in the 1 MB cache?
+    \vspace{1.0cm}
+
+    \item (2 points) How many page faults would occur if the elements of the array are stored in \textbf{column order} in the main memory?
+    \vspace{1.2cm}
+
+    \item (2 points) Suppose it takes 40 ms to load a page from the main memory to cache and the time to load data from cache is very low. Estimate the total time needed to perform this normalization.
+    \vspace{1.4cm}
+\end{enumerate}
+
+\newpage
+
+\textbf{2. (10 Points) Set-Associative Cache with LRU}
+
+This computer system uses set-associative (2 sets) mapping for cache memory with LRU. Two figures show the source code and the original cache content after running the code (captured after pass: $j=3,7,9$ and $i=4,2,0$).
+
+\vspace{0.2cm}
+Assume the data cache has 8 block positions total. Set 0 contains block positions 0--3, and Set 1 contains block positions 4--7. Use the same cache-mapping idea as the practice exam table. Array $A(4,10)$ is stored in column-major order, and the accessed elements $A(0,j)$ for $j=0,1,\ldots,9$ are placed in Set 0. Set 1 remains empty.
+
+\begin{lstlisting}[language=Pascal]
+SUM := 0
+for j := 0 to 9 do
+    SUM := SUM + A(0,j);
+end
+AVE := SUM / 10;
+
+for i := 9 downto 0 do
+    A(0,i) := A(0,i) / AVE;
+end
+\end{lstlisting}
+
+\begin{center}
+\colorbox{yellow!25}{\parbox{0.82\textwidth}{\centering
+\textbf{Changed line:} \texttt{for i := 9 downto 0 do}
+}}
+\end{center}
+
+The following table shows the original cache content after running the code above, captured after pass $j=3,7,9$ and $i=4,2,0$.
+
+\begin{center}
+\scriptsize
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Set} & \textbf{Block pos.} & \textbf{$j=3$} & \textbf{$j=7$} & \textbf{$j=9$} & \textbf{$i=4$} & \textbf{$i=2$} & \textbf{$i=0$} \\
+\hline
+\multirow{4}{*}{Set 0} & 0 & $A(0,0)$ & $A(0,4)$ & $A(0,8)$ & $A(0,4)$ & $A(0,4)$ & $A(0,0)$ \\
+\cline{2-8}
+& 1 & $A(0,1)$ & $A(0,5)$ & $A(0,9)$ & $A(0,5)$ & $A(0,5)$ & $A(0,1)$ \\
+\cline{2-8}
+& 2 & $A(0,2)$ & $A(0,6)$ & $A(0,6)$ & $A(0,6)$ & $A(0,2)$ & $A(0,2)$ \\
+\cline{2-8}
+& 3 & $A(0,3)$ & $A(0,7)$ & $A(0,7)$ & $A(0,7)$ & $A(0,3)$ & $A(0,3)$ \\
+\hline
+\multirow{4}{*}{Set 1} & 4 & & & & & & \\
+\cline{2-8}
+& 5 & & & & & & \\
+\cline{2-8}
+& 6 & & & & & & \\
+\cline{2-8}
+& 7 & & & & & & \\
+\hline
+\end{tabular}
+\end{center}
+
+Now change exactly the highlighted line of code to:
+
+\begin{center}
+\colorbox{yellow!25}{\parbox{0.82\textwidth}{\centering
+\texttt{for i := 9 downto 0 do}
+\quad $\Longrightarrow$ \quad
+\texttt{for i := 0 to 9 do}
+}}
+\end{center}
+
+\textbf{What should the content of cache be? Draw/fill the new table.}
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Set} & \textbf{Block pos.} & \textbf{$j=3$} & \textbf{$j=7$} & \textbf{$j=9$} & \textbf{$i=4$} & \textbf{$i=2$} & \textbf{$i=0$} \\
+\hline
+\multirow{4}{*}{Set 0} & 0 & & & & & & \\
+\cline{2-8}
+& 1 & & & & & & \\
+\cline{2-8}
+& 2 & & & & & & \\
+\cline{2-8}
+& 3 & & & & & & \\
+\hline
+\multirow{4}{*}{Set 1} & 4 & & & & & & \\
+\cline{2-8}
+& 5 & & & & & & \\
+\cline{2-8}
+& 6 & & & & & & \\
+\cline{2-8}
+& 7 & & & & & & \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+% --- Answer Key ---
+\section*{Answer Key (เฉลยละเอียด)}
+
+\subsection*{Part 1: Multiple Choice Answers}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|c|c|Y|}
+\hline
+\rowcolor[gray]{0.85} \textbf{ข้อที่} & \textbf{เฉลย} & \textbf{คำอธิบายภาษาไทย} \\ \hline
+1 & \textbf{B} & ยิ่งไกล CPU มากขึ้น หน่วยความจำมักใหญ่ขึ้นและถูกลงต่อบิต แต่ช้าลง เช่น จาก cache ไป RAM และ disk \\ \hline
+2 & \textbf{A} & Temporal locality คือสิ่งที่เพิ่งถูกใช้งาน มีโอกาสถูกใช้อีกในเวลาใกล้ ๆ \\ \hline
+3 & \textbf{B} & Spatial locality คือถ้าเข้าถึง address หนึ่งแล้ว address ที่อยู่ใกล้กันมักถูกใช้ต่อ \\ \hline
+4 & \textbf{C} & Offset $=\log_2 32=5$ bits, cache lines $=16KB/32=512=2^9$, tag $=32-9-5=18$ bits \\ \hline
+5 & \textbf{C} & จำนวน block $=64KB/64=1024$, จำนวน set $=1024/4=256=2^8$ จึงใช้ index 8 bits \\ \hline
+6 & \textbf{C} & $t_{ave}=0.95(1)+0.05(21)=2.00$ cycles \\ \hline
+7 & \textbf{C} & Write-back เขียนลง cache ก่อนและตั้ง dirty bit จากนั้นค่อยเขียนกลับ main memory ตอน block ถูกแทนที่ \\ \hline
+8 & \textbf{C} & LRU เลือก block ที่ไม่ได้ถูกอ้างอิงนานที่สุดออกก่อน \\ \hline
+9 & \textbf{A} & Read miss ต้องดึง block จาก memory ชั้นล่างขึ้น cache แล้วจึงส่ง word ที่ต้องการให้ CPU \\ \hline
+10 & \textbf{A} & TLB เป็น cache เฉพาะทางสำหรับเก็บการแปลง virtual page ไป physical frame \\ \hline
+11 & \textbf{C} & Array มี $1024 \times 1024$ elements และแต่ละ element = 4 bytes ดังนั้นใช้ $1024 \times 1024 \times 4 = 4$ MB \\ \hline
+12 & \textbf{C} & Column-major: \texttt{A[0][1]} อยู่หลัง column แรก 1024 integers จึงเป็น $1024 \times 4=4096=\texttt{0x00001000}$ \\ \hline
+13 & \textbf{C} & Page size = 4KB และ array size = 4MB ดังนั้นจำนวน page คือ $4MB/4KB=1024$ pages \\ \hline
+14 & \textbf{B} & Page size 4KB ทำให้ offset มี 12 bits ดังนั้น \texttt{0x00002C10} มี VPN = \texttt{0x00002}, offset = \texttt{0xC10} \\ \hline
+15 & \textbf{C} & VPN \texttt{0x00002} ไม่อยู่ใน TLB และ page table มี valid bit = 0 อยู่บน Disk D5 จึงเป็น TLB miss แล้วเกิด page fault \\ \hline
+16 & \textbf{C} & Disk block size = \texttt{0x200} bytes; $\lfloor\texttt{0xC10}/\texttt{0x200}\rfloor=6$ ดังนั้น block คือ \texttt{0x2400}+6 = \texttt{0x2406} \\ \hline
+17 & \textbf{B} & 4KB page ต้องอ่าน $4096/512=8$ disk blocks เพื่อโหลดทั้งหน้า \\ \hline
+18 & \textbf{B} & PPN \texttt{0x0020} รวมกับ offset \texttt{0xC10} ได้ physical address \texttt{0x00020C10} \\ \hline
+19 & \textbf{B} & \texttt{0x00003204} มี VPN \texttt{0x00003} และ offset \texttt{0x204}; TLB มี VPN นี้อยู่แล้ว จึงได้ PPN \texttt{0x0006} และ physical address \texttt{0x00006204} \\ \hline
+20 & \textbf{C} & Column-major ทำให้หนึ่ง column = 1024 integers = 4KB = 1 page; มี 1024 columns จึงใช้เวลา $1024 \times 40ms = 40.96s$ \\ \hline
+\end{tabularx}
+\end{center}
+
+\subsection*{Part 2: Short Answer Solutions}
+\begin{enumerate}
+    \item \textbf{Benefit of cache}: cache ช่วยลด average memory access time โดยเก็บข้อมูลหรือคำสั่งที่ถูกใช้บ่อย/มีโอกาสถูกใช้ใกล้ ๆ CPU ทำให้ access ส่วนใหญ่เร็วกว่าไปอ่านจาก main memory
+    \item \textbf{100\% cache miss rate}:\\
+    เป็นไปได้ เช่น access ข้อมูลไม่ซ้ำหรือไม่มี locality\\
+    หรือ working set ใหญ่กว่า cache จน block ถูกแทนที่ก่อนใช้ซ้ำ\\
+    แต่โปรแกรมจริงมักมี locality จึงไม่ค่อยเกิดตลอดเวลา
+    \item \textbf{Tag store}: ใช้เก็บ tag และสถานะของ cache block เช่น valid/dirty เพื่อบอกว่า block ใน cache เป็นสำเนาของ memory block ใด และใช้ตรวจว่า access นั้นเป็น hit หรือ miss
+    \item \textbf{Temporal vs spatial locality}: temporal คือข้อมูล/คำสั่งที่เพิ่งใช้มีโอกาสถูกใช้อีกเร็ว ๆ นี้ ส่วน spatial คือถ้าใช้ address หนึ่งแล้ว address ใกล้เคียงมักถูกใช้ตามมา
+    \item \textbf{Tag/index/offset}: tag ใช้ตรวจว่า block ไหนอยู่ใน cache, index/set ใช้เลือกตำแหน่งหรือ set ใน cache,\\ offset ใช้เลือก byte/word ภายใน block
+    \item \textbf{Abbreviations}: TLB = Translation Lookaside Buffer, LRU = Least Recently Used, AMAT = Average Memory Access Time
+    \item \textbf{Write-through vs write-back}: write-through เขียน cache และ main memory พร้อมกัน ส่วน write-back เขียน cache ก่อนและค่อยเขียนกลับภายหลังเมื่อ block ถูกแทนที่
+    \item \textbf{Demand paging}: โหลด page เมื่อมีการอ้างถึงจริงเท่านั้น; page fault เกิดเมื่อ page ที่ต้องใช้ยังไม่อยู่ใน physical memory
+    \item \textbf{Virtual vs physical address}: virtual address เป็น address ที่โปรแกรมเห็น ส่วน physical address เป็นตำแหน่งจริงใน RAM หลังผ่าน MMU/page table
+    \item \textbf{Disk access latency}: โดยทั่วไปประกอบด้วย seek time, rotational latency และ transfer time
+\end{enumerate}
+
+\subsection*{Part 3: Problem Solving Solutions}
+
+\textbf{1. Array Normalization, Direct-Mapped Cache, and Page Faults}
+\begin{enumerate}[label=\textbf{1.\arabic*}]
+    \item Array มี $1024 \times 1024$ elements และแต่ละ element ขนาด 32 bits = 4 bytes
+    \[
+        1024 \times 1024 \times 4 = 4{,}194{,}304 \text{ bytes} = 4 \text{ MB}
+    \]
+
+    \item Page size = 4KB = 4096 bytes ดังนั้นจำนวน elements ต่อ page คือ
+    \[
+        4096 / 4 = 1024 \text{ elements/page}
+    \]
+
+    \item Cache size = 1MB = $2^{20}$ bytes และ page/block size = 4KB = $2^{12}$ bytes
+    \[
+        2^{20}/2^{12}=2^8=256 \text{ pages}
+    \]
+
+    \item ถ้าเก็บแบบ column order หนึ่ง column มี 1024 elements
+    \[
+        1024 \times 4 = 4096 \text{ bytes} = 1 \text{ page}
+    \]
+    การ normalize ทำทีละ column ดังนั้นแต่ละ column ทำให้เกิด page fault ประมาณ 1 ครั้ง และมีทั้งหมด 1024 columns
+    \[
+        \text{page faults} = 1024
+    \]
+
+    \item ถ้าโหลดหนึ่ง page ใช้ 40 ms
+    \[
+        1024 \times 40 \text{ ms} = 40960 \text{ ms} = 40.96 \text{ s}
+    \]
+\end{enumerate}
+
+\vspace{0.5cm}
+\textbf{2. Set-Associative Cache with LRU}
+
+\textbf{Changed line in the code}
+\begin{center}
+\colorbox{yellow!25}{\parbox{0.82\textwidth}{\centering
+\texttt{for i := 9 downto 0 do}
+\quad $\Longrightarrow$ \quad
+\texttt{for i := 0 to 9 do}
+}}
+\end{center}
+
+\textbf{Important note}
+
+หัวตารางยังคงอิงตามรูปประกอบคือ $j=3,7,9$ และ $i=4,2,0$ แต่หลังเปลี่ยนโค้ดแล้ว loop ที่สองทำงานจริงตามลำดับ $i=0,1,\ldots,9$. ดังนั้นเวลาคิด LRU ต้องไล่ตามลำดับการรันจริงก่อน แล้วจึงนำสถานะ cache หลัง pass $i=4$, $i=2$, และ $i=0$ ไปใส่ในคอลัมน์ที่กำหนด.
+
+\textbf{Completed cache-content table}
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Set} & \textbf{Block pos.} & \textbf{$j=3$} & \textbf{$j=7$} & \textbf{$j=9$} & \textbf{$i=4$} & \textbf{$i=2$} & \textbf{$i=0$} \\
+\hline
+\multirow{4}{*}{Set 0} & 0 & $A(0,0)$ & $A(0,4)$ & $A(0,8)$ & $A(0,2)$ & $A(0,2)$ & $A(0,8)$ \\
+\cline{2-8}
+& 1 & $A(0,1)$ & $A(0,5)$ & $A(0,9)$ & $A(0,3)$ & $A(0,9)$ & $A(0,9)$ \\
+\cline{2-8}
+& 2 & $A(0,2)$ & $A(0,6)$ & $A(0,6)$ & $A(0,4)$ & $A(0,0)$ & $A(0,0)$ \\
+\cline{2-8}
+& 3 & $A(0,3)$ & $A(0,7)$ & $A(0,7)$ & $A(0,1)$ & $A(0,1)$ & $A(0,7)$ \\
+\hline
+\multirow{4}{*}{Set 1} & 4 & -- & -- & -- & -- & -- & -- \\
+\cline{2-8}
+& 5 & -- & -- & -- & -- & -- & -- \\
+\cline{2-8}
+& 6 & -- & -- & -- & -- & -- & -- \\
+\cline{2-8}
+& 7 & -- & -- & -- & -- & -- & -- \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Checking note: hit/miss result for the modified loop}
+
+หลังจบ loop แรกที่ $j=9$ ใน Set 0 จะเหลือ $A(0,8)$, $A(0,9)$, $A(0,6)$, $A(0,7)$ อยู่ใน cache แต่ loop ใหม่เริ่มจาก $i=0$ ขึ้นไป จึงเกิด miss ต่อเนื่อง:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{$i$} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+\hline
+\textbf{Result} & M & M & M & M & M & M & M & M & M & M \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{LRU explanation}
+
+ตอนจบ loop แรก ข้อมูลที่ใหม่ที่สุดคือกลุ่มท้าย ๆ เช่น $A(0,8)$ และ $A(0,9)$. ถ้าใช้ loop เดิมแบบ \texttt{downto} จะเริ่มแตะข้อมูลท้าย ๆ ก่อน จึงมีโอกาส hit. แต่เมื่อเปลี่ยนเป็น $i=0$ to $9$ จะเริ่มจากข้อมูลต้น ๆ ที่ไม่อยู่ใน cache แล้วค่อย ๆ แทนที่ block เก่าตาม LRU ก่อนจะวนมาถึงข้อมูลท้าย ๆ ทำให้ใน loop ที่สองทุก access เป็น miss.
+
+\end{document}
